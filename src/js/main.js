@@ -1,46 +1,76 @@
 
-function main() {
-    renderList();
-    listenMenuBtn()
+var currentCat = 'accessories';
+const alpaca = {}
+
+
+const createMenuBtn = (text, isActive) => {
+    let btn = `
+            <button type="button" class="menu__button ${isActive ? 'active' : ''}" 
+            onclick="menuBtnOnClick(this.value)"
+            value="${text}">${text}</button>`;
+    return btn
 }
 
+const createPartsBtn = (text, isActive) => {
+    console.log(isActive)
+    let btn = `
+            <button type="button" class="menu__button ${isActive ? 'active' : ''}" 
+            onclick="partsBtnOnClick(this.value)"
+            value="${text}">${text}</button>`;
+    return btn
+}
 
-function renderList(){
-    let menu = document.querySelector('.menu__categories');
-    let submenu =  document.querySelector('.category');
-    let activeCat = alpacaMembers.find(el => el.active === true);
+const menuBtnOnClick = (category) => {
+    currentCat = category;
+    renderMenuList()
+}
 
-    let menuBtns = alpacaMembers.map((category) => {
-        let btn = `<button type="button" class="menu__button ${category.active ? 'active' : ''}">${category.category}</button>`
-        return btn
+const partsBtnOnClick = (part) => {
+    alpaca[currentCat] = part;
+    renderPartsList()
+    renderImages()
+}
+
+const renderMenuList = () => {
+    const menuCatEl = document.querySelector('.menu__categories')
+    let menuList = data.map((cat) => {
+        let newBtn = createMenuBtn(cat.name, currentCat == cat.name);
+        return newBtn;
     }).join('')
-
-    let submenuBtns = activeCat.category !== 'nose' ? activeCat.members.map((member) => {
-        let btn = `<button type="button" class="menu__button ${member.active ? 'active' : ''}">${member.member}</button>`
-        return btn
-    }).join('') : ''
-
-    let title = `<h3>${activeCat.category}</h3>`
-
-    menu.innerHTML = menuBtns;
-    submenu.innerHTML = submenuBtns;
-    submenu.insertAdjacentHTML('afterbegin', title)
-    listenMenuBtn()
+    menuCatEl.innerHTML = menuList;
+    renderPartsList()
 }
 
-function listenMenuBtn(){
-    let menuBtns = document.querySelectorAll('.menu__categories > .menu__button');
-    menuBtns.forEach((btn, idx) => {
-        btn.addEventListener('click', () => {
-            let activeCat = alpacaMembers.find(el => el.active === true);
-            if(alpacaMembers[idx] !== activeCat ){
-                activeCat.active = false;
-                alpacaMembers[idx].active = true;
-                renderList()
-            }
-        })
+const renderPartsList = () => {
+    const menuPartsEl = document.querySelector('.menu__parts')
+    let category = data.find(cat => cat.name == currentCat);
+    let partList = category?.parts.map((part) => {
+        let newBtn = createPartsBtn(part, alpaca[currentCat] == part);
+        return newBtn;
+    }).join('')
+    menuPartsEl.innerHTML = `<h3>${currentCat}</h3>${partList}`;
+}
+
+const generateImages = () => {
+    const images = []
+    // Object.values(alpaca).map((part) => {
+    //     let image = `<img src="/src/img/${Object.entries(alpaca).find(el =)}/${part}.png" alt="aplaca ${part}"></img>`
+    //     return image;
+    // })
+    for (const [key, value] of Object.entries(alpaca)) {
+        let image = `<img src="/src/img/${key}/${value}.png" class="${key}" alt="aplaca ${value}"></img>`
+        images.push(image)
+    }
+    return images;
+}
+
+const renderImages = () => {
+    const preview = document.querySelector('.customizer__preview')
+    preview.innerHTML = ""
+    let images = generateImages();
+    images.forEach((img) => {
+        preview.insertAdjacentHTML('beforeend', img)
     })
 }
 
-
-main()
+renderMenuList()

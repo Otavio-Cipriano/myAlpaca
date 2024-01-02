@@ -34,12 +34,19 @@ body {
     flex: 1;
     max-width: 600px;
     min-width: 500px;
+    position: relative;
 }
 
 .customizer__preview > img{
     width: 100%;
     height: auto;
     border-radius: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .customizer__menu {
@@ -71,6 +78,6 @@ body {
     font-size: 1rem;
 }
 
-.category > h3{
+.menu__parts > h3{
     text-transform: capitalize;
 }
