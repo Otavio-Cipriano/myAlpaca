@@ -1,6 +1,15 @@
 
 var currentCat = 'accessories';
-const alpaca = {}
+const alpaca = {
+    ears: 'default',
+    eyes: 'default',
+    hair: 'default',
+    leg: 'default',
+    mouth: 'default',
+    neck: 'default',
+    nose: 'nose',
+    backgrounds: 'blue50'
+}
 
 
 const createMenuBtn = (text, isActive) => {
@@ -48,15 +57,11 @@ const renderPartsList = () => {
         let newBtn = createPartsBtn(part, alpaca[currentCat] == part);
         return newBtn;
     }).join('')
-    menuPartsEl.innerHTML = `<h3>${currentCat}</h3>${partList}`;
+    menuPartsEl.innerHTML = `<h2>${currentCat}</h2>${partList}`;
 }
 
 const generateImages = () => {
     const images = []
-    // Object.values(alpaca).map((part) => {
-    //     let image = `<img src="/src/img/${Object.entries(alpaca).find(el =)}/${part}.png" alt="aplaca ${part}"></img>`
-    //     return image;
-    // })
     for (const [key, value] of Object.entries(alpaca)) {
         let image = `<img src="/src/img/${key}/${value}.png" class="${key}" alt="aplaca ${value}"></img>`
         images.push(image)
@@ -65,12 +70,52 @@ const generateImages = () => {
 }
 
 const renderImages = () => {
-    const preview = document.querySelector('.customizer__preview')
+    const preview = document.querySelector('.customizer__preview > .preview')
     preview.innerHTML = ""
     let images = generateImages();
     images.forEach((img) => {
         preview.insertAdjacentHTML('beforeend', img)
     })
+    insertLogo()
+}
+
+const randomizeAlpaca = () => {
+    data.forEach((element) => {
+        let pos = Math.floor(Math.random() * element.parts.length)
+        let part = element.parts[pos]
+        alpaca[element.name] = part;
+    })
+}
+
+const randomAlpacaOnClick = () => {
+    const randomBtn = document.querySelector('.action__button.randomize');
+    randomBtn.addEventListener('click', () => { randomizeAlpaca(); renderImages() })
+}
+
+const htmlToImage = () => {
+    const htmlEl = document.querySelector('.preview');
+    html2canvas(htmlEl, {backgroundColor: null}).then((canvas) => {
+        const imageDataURL = canvas.toDataURL("image/png");
+        const a = document.createElement("a");
+        a.href = imageDataURL;
+        a.download = "my-alpaca.png";
+        a.click();
+    })
+}
+
+const downloadImageOnClick = () => {
+    const downloadBtn = document.querySelector('.action__button.download')
+    downloadBtn.addEventListener('click', () => { htmlToImage() })
+}
+
+const insertLogo = () => {
+    const preview = document.querySelector('.preview');
+    const logo = document.createElement('span');
+    logo.innerText = 'Otávio Cipriano'
+    preview.append(logo)
 }
 
 renderMenuList()
+renderImages()
+randomAlpacaOnClick()
+downloadImageOnClick()

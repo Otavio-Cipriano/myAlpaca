@@ -10,23 +10,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <!-- choose one -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
     <link rel="stylesheet" href="style.css" />
     <script src="js/data.js" defer></script>
     <script src="js/main.js" defer></script>
+
 </head>
 
 <body>
     <div class="container">
-        <h2>Alpaca Generator</h2>
+        <h1>Alpaca Generator</h1>
         <div class="customizer">
             <div class="customizer__preview">
-                
+                <div class="preview"></div>
+                <div class="customizer__actions">
+                    <button class="action__button randomize"><i data-feather="shuffle"></i>Random</button>
+                    <button class="action__button download"><i data-feather="image"></i>Download</button>
+                </div>
             </div>
             <div class="customizer__menu">
-                <h3>Menu</h3>
+                <h2>Menu</h2>
                 <div class="menu">
                     <div class="menu__categories">
-
                     </div>
                     <div class="menu__parts">
 
@@ -35,6 +42,7 @@
             </div>
         </div>
     </div>
+    <script>feather.replace()</script>
 </body>
 
 </html>
