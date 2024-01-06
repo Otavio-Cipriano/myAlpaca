@@ -76,7 +76,6 @@ const renderImages = () => {
     images.forEach((img) => {
         preview.insertAdjacentHTML('beforeend', img)
     })
-    insertLogo()
 }
 
 const randomizeAlpaca = () => {
@@ -108,12 +107,6 @@ const downloadImageOnClick = () => {
     downloadBtn.addEventListener('click', () => { htmlToImage() })
 }
 
-const insertLogo = () => {
-    const preview = document.querySelector('.preview');
-    const logo = document.createElement('span');
-    logo.innerText = 'Otávio Cipriano'
-    preview.append(logo)
-}
 
 renderMenuList()
 renderImages()
