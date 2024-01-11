@@ -63,7 +63,7 @@ const renderPartsList = () => {
 const generateImages = () => {
     const images = []
     for (const [key, value] of Object.entries(alpaca)) {
-        let image = `<img src="/src/img/${key}/${value}.png" class="${key}" alt="aplaca ${value}"></img>`
+        let image = `<img src="/src/img/${key.toLowerCase()}/${value.toLowerCase()}.png" class="${key.toLowerCase()}" alt="aplaca ${value.toLowerCase()}"></img>`
         images.push(image)
     }
     return images;
