@@ -84,6 +84,8 @@ const randomizeAlpaca = () => {
         let part = element.parts[pos]
         alpaca[element.name] = part;
     })
+    renderMenuList()
+    renderPartsList()
 }
 
 const randomAlpacaOnClick = () => {
